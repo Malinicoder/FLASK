@@ -1,4 +1,5 @@
 flask
 pyjwt
 flask_sqlalchemy
+flask-bcrypt Flask-JWT-Extended
 python-dotenv
