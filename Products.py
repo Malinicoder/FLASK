@@ -1,10 +1,11 @@
 import requests
 import os
 from flask import Flask, jsonify
+from config import Config 
 from flask_jwt_extended import JWTManager, jwt_required 
 app = Flask(__name__)
 port = int(os.environ.get('PORT', 5001))
-app.config["JWT_SECRET_KEY"] = "super-secret-key-change-this"
+app.config.from_object(Config) 
 jwt = JWTManager(app)
 
 BASE_URL = "https://dummyjson.com/products"
@@ -28,4 +29,5 @@ def get_products():
         products.append(product_data)
     return jsonify({'data': products}), 200 if products else 204
 if __name__ == "__main__":
+
     app.run(debug=True, host="0.0.0.0", port=port)
