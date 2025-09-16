@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import requests
 import os
 from flask_sqlalchemy import SQLAlchemy 
+from config import Config 
 import psycopg2
 
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
@@ -9,12 +10,7 @@ from bcrypt import hashpw, gensalt
 
 
 app=Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:Root@localhost:5432/postgres' 
-app.config["JWT_SECRET_KEY"] = "super-secret-key-change-this"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 3600
-app.config["JWT_ALGORITHM"] = "HS256"
-
+app.config.from_object(Config) 
 jwt = JWTManager(app)
 
 db=SQLAlchemy(app)
@@ -88,4 +84,5 @@ def user_login():
 
 if __name__=='__main__':
      app.run(debug=True)
+
 
